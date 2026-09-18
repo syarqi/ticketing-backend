@@ -1,4 +1,4 @@
-export type Role = 'ADMIN' | 'TEKNISI';
+export type Role = 'ADMIN' | 'TEKNISI' | 'USER';
 
 export type TicketStatus = 'OPEN' | 'IN_PROGRESS' | 'CLOSED';
 

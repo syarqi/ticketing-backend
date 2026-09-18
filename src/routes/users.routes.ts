@@ -24,7 +24,7 @@ const createUserSchema = z.object({
   username: z.string().min(3).max(64).regex(/^[a-zA-Z0-9._-]+$/, 'Username may only contain letters, numbers, dot, dash, underscore'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
   fullName: z.string().min(1).max(150),
-  role: z.enum(['ADMIN', 'TEKNISI']),
+  role: z.enum(['ADMIN', 'TEKNISI', 'USER']),
 });
 
 router.post(
@@ -50,7 +50,7 @@ router.post(
 
 const updateUserSchema = z.object({
   fullName: z.string().min(1).max(150).optional(),
-  role: z.enum(['ADMIN', 'TEKNISI']).optional(),
+  role: z.enum(['ADMIN', 'TEKNISI', 'USER']).optional(),
   isActive: z.boolean().optional(),
   password: z.string().min(8).optional(),
 });

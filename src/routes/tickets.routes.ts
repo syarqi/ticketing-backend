@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { z } from 'zod';
 import path from 'path';
 import { pool, withTransaction } from '../db/pool';
-import { requireAuth } from '../middleware/auth';
+import { requireAuth, requireRole } from '../middleware/auth';
 import { asyncHandler, ApiError } from '../middleware/error';
 import { upload } from '../middleware/upload';
 import { nextTicketId } from '../utils/ticketId';
@@ -269,6 +269,7 @@ router.get(
 
 router.post(
   '/:id/take',
+  requireRole('ADMIN', 'TEKNISI'),
   asyncHandler(async (req, res) => {
     const userId = req.user!.id;
 
@@ -324,6 +325,7 @@ const addUpdateSchema = z.object({
 
 router.post(
   '/:id/updates',
+  requireRole('ADMIN', 'TEKNISI'),
   upload.single('photo'),
   asyncHandler(async (req, res) => {
     const data = addUpdateSchema.parse(req.body);
@@ -363,6 +365,7 @@ router.post(
 
 router.post(
   '/:id/close',
+  requireRole('ADMIN', 'TEKNISI'),
   asyncHandler(async (req, res) => {
     const userId = req.user!.id;
     await assertOwnsInProgressTicket(req.params.id, userId, req.user!.role);
